@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://kit.fontawesome.com/a3df9d4d38.js" crossorigin="anonymous"/>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Listagem de livros</h1>
+    <a href="/livros/form">Cadastrar livros</a>
+    <br/>
+    
+    <table id="livros">
+      <tr>
+        <td>ID</td>
+        <td>Título</td>
+        <td>Descrição</td>
+        <td>Preço</td>
+        <td>Editar</td>
+        <td>Remover</td>
+      </tr>
+      <for|livro| of=data.livros>
+        <tr id="livro_${livro.id}">
+          <td>${livro.id}</td>
+          <td>${livro.titulo}</td>
+          <td>${livro.descricao}</td>
+          <td>${livro.preco}</td>
+          <td>
+            <a href="/livros/form/${livro.id}">
+              <i class="far fa-edit"/>
+            </a>
+          </td>
+          <td>
+            <a data-ref="${livro.id}" data-type="remocao">
+              Apagar
+            </a>
+          </td>
+        </tr>
+      </for>
+    </table>
+    <script src="/estatico/js/remove-livro.js"/>
+  </body>
+</html>
