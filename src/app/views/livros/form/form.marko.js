@@ -4,6 +4,7 @@
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/casa-do-codigo$1.0.0/src/app/views/livros/form/form.marko",
     marko_renderer = require("marko/src/runtime/components/renderer"),
+    marko_forOf = require("marko/src/runtime/helpers/for-of"),
     helpers_escape_xml = require("marko/src/runtime/html/helpers/escape-xml"),
     marko_escapeXml = helpers_escape_xml.x,
     marko_attr = require("marko/src/runtime/html/helpers/attr"),
@@ -15,10 +16,23 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<!DOCTYPE html><html lang=pt-br><head><meta charset=UTF-8><meta name=viewport content=\"width=device-width, initial-scale=1.0\"><title>Document</title></head><body><h1>Cadastro de livros</h1><a href=/livros>Voltar para lista de livros</a> <br><form" +
+  out.w("<html><head><meta charset=utf-8><link rel=stylesheet href=/estatico/css/bootstrap.min.css><link rel=stylesheet href=/estatico/css/fontawesome.min.css><link rel=stylesheet href=/estatico/css/casadocodigo.css></head><body><header class=cabecalhoPrincipal><div class=container><div class=\"row align-items-center\"><div class=col-4><h1 class=logo><img src=/estatico/imagens/logo-casadocodigo.svg alt=\"Casa do Código\"></h1></div><div class=\"cabecalhoPrincipal-navegacao col-8\"><a href=# class=login><i class=\"fas fa-sign-in-alt\"></i>Login</a></div></div></div></header><main class=conteudoPrincipal><div class=\"container mt-5\"><h1>Cadastro de livros</h1>");
+
+  if (data.erros) {
+    var $for$0 = 0;
+
+    marko_forOf(data.erros, function(erro) {
+      var $keyScope$0 = "[" + (($for$0++) + "]");
+
+      out.w("<div class=\"alert alert-danger\">" +
+        marko_escapeXml(erro.msg) +
+        "</div>");
+    });
+  }
+
+  out.w("<form" +
     marko_attr("action", data.path) +
-    " method=post>" +
-    marko_escapeXml(data.path));
+    " method=post>");
 
   if (data.livro.id) {
     out.w("<div><input type=hidden name=_method value=PUT><input type=hidden id=id name=id" +
@@ -26,17 +40,17 @@ function render(input, out, __component, component, state) {
       "></div>");
   }
 
-  out.w("<div><label for=titulo>Titulo:</label><input type=text id=titulo name=titulo" +
+  out.w("<div class=form-group><label for=titulo>Titulo:</label><input type=text id=titulo name=titulo" +
     marko_attr("value", data.livro.titulo) +
-    " placeholder=\"coloque o titulo\"></div><div><label for=preco>Preço:</label><input type=text id=preco name=preco" +
+    " placeholder=\"coloque o titulo\" class=form-control></div><div class=form-group><label for=preco>Preço:</label><input type=text id=preco name=preco placeholder=150.25" +
     marko_attr("value", data.livro.preco) +
-    " placeholder=150.25></div><div><label for=descricao>Descrição:</label><textarea cols=20 rows=10 id=descricao name=descricao placeholder=\"fale sobre o livro\">" +
+    " class=form-control></div><div class=form-group><label for=descricao>Descrição:</label><textarea cols=20 rows=10 id=descricao name=descricao placeholder=\"fale sobre o livro\" class=form-control>" +
     marko_escapeXml(data.livro.descricao) +
-    "</textarea></div><input type=submit value=Salvar></form><script src=/estatico/js/editar-livro.js></script>");
+    "</textarea></div><input type=submit value=Salvar class=\"btn btn-primary\"></form></div></main><footer class=rodape><div class=container><div class=\"row align-items-center\"><div class=col-4><img src=/estatico/imagens/logo-rodape.svg class=logo-rodape></div><div class=col-8><ul class=redesSociais><li><a href=http://www.facebook.com/casadocodigo class=compartilhar-facebook target=_blank>/CasaDoCodigo</a></li><li><a href=http://www.twitter.com/casadocodigo class=compartilhar-twitter target=_blank>@casadocodigo</a></li></ul></div></div></div></footer>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "23");
+  await_reorderer_tag({}, out, __component, "45");
 
   _preferred_script_location_tag({}, out);
 

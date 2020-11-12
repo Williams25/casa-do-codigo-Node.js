@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
 const methodOverride = require('method-override')
-
+const template = require('../app/views/template')
 const routes = require('../app/rotas/rotas')
 
 app.use(methodOverride((req, res) => {
@@ -21,9 +21,18 @@ app.use('/estatico', express.static('src/app/public'))
 app.use(bodyParser.urlencoded({
   extended: true,
 }))
+
 app.use(express.json())
 app.use(markoExpress())
 
 routes(app)
+
+app.use((req, res, next) => {
+  return res.status(404).marko(template.base.erro404)
+})
+
+app.use((erro, req, res, next) => {
+  return res.status(500).marko(require(template.base.erro500))
+})
 
 module.exports = app
