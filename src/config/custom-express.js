@@ -6,6 +6,7 @@ const app = express()
 const methodOverride = require('method-override')
 const template = require('../app/views/template')
 const routes = require('../app/rotas/rotas')
+const sessao = require('./sessao-autenticacao')
 
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -15,6 +16,8 @@ app.use(methodOverride((req, res) => {
     return method
   }
 }))
+
+sessao(app)
 
 app.use('/estatico', express.static('src/app/public'))
 
